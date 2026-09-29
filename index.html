@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DayScore | Personal Productivity Engine</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <div class="app-container">
+    <aside class="sidebar">
+      <div class="brand">
+        <i class="fa-solid fa-chart-line logo-icon"></i>
+        <h2>DayScore</h2>
+      </div>
+      <nav class="nav-links">
+        <a href="#dashboard" class="nav-btn active" data-target="dashboard-view"><i class="fa-solid fa-house"></i> Home</a>
+        <a href="#activities" class="nav-btn" data-target="activities-view"><i class="fa-solid fa-list-check"></i> Activities</a>
+        <a href="#goals" class="nav-btn" data-target="goals-view"><i class="fa-solid fa-bullseye"></i> Daily Goals</a>
+        <a href="#analytics" class="nav-btn" data-target="analytics-view"><i class="fa-solid fa-chart-pie"></i> Analytics</a>
+      </nav>
+      <div class="user-profile">
+        <div class="avatar"><i class="fa-solid fa-user"></i></div>
+        <div class="user-info">
+          <p class="user-name">Local User</p>
+          <span class="user-status">MVP Mode</span>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="top-header">
+        <div class="header-title">
+          <h1 id="page-title">Productivity Dashboard</h1>
+          <p id="page-subtitle">Track activities, measure focus, and hit your daily score goals.</p>
+        </div>
+        <div class="date-badge" id="current-date">Today</div>
+      </header>
+
+      <!-- HOME / DASHBOARD VIEW -->
+      <div id="dashboard-view" class="view-section active">
+        <div class="stats-overview">
+          <div class="card score-card">
+            <div class="card-header">
+              <h3>Today's DayScore</h3>
+              <span class="badge" id="score-status">Calculating...</span>
+            </div>
+            <div class="score-display">
+              <span id="score-value">0</span>
+              <span class="score-max">/ 100</span>
+            </div>
+            <div class="progress-bar-bg">
+              <div class="progress-bar-fill" id="score-bar" style="width: 0%"></div>
+            </div>
+          </div>
+
+          <div class="card metric-card">
+            <i class="fa-solid fa-clock metric-icon"></i>
+            <div>
+              <h4>Logged Time</h4>
+              <p class="metric-val" id="total-hours">0.0 hrs</p>
+            </div>
+          </div>
+
+          <div class="card metric-card">
+            <i class="fa-solid fa-square-check metric-icon"></i>
+            <div>
+              <h4>Activities Completed</h4>
+              <p class="metric-val" id="activity-count">0</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="dashboard-grid">
+          <section class="card section-card">
+            <h3><i class="fa-solid fa-plus-circle"></i> Log Activity</h3>
+            <form id="activity-form">
+              <div class="form-group">
+                <label for="act-name">Activity Title</label>
+                <input type="text" id="act-name" placeholder="e.g. Java Coding Session" required>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="act-category">Category</label>
+                  <select id="act-category">
+                    <option value="Work">Work</option>
+                    <option value="Study">Study</option>
+                    <option value="Health">Health</option>
+                    <option value="Personal">Personal</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="act-duration">Duration (hours)</label>
+                  <input type="number" id="act-duration" step="0.5" min="0.5" max="24" value="1.0" required>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="act-impact">Impact Weight</label>
+                <select id="act-impact">
+                  <option value="1.2">High Focus (1.2x)</option>
+                  <option value="1.0" selected>Normal Focus (1.0x)</option>
+                  <option value="0.7">Low Focus (0.7x)</option>
+                </select>
+              </div>
+              <button type="submit" class="btn-primary"><i class="fa-solid fa-paper-plane"></i> Save Activity</button>
+            </form>
+          </section>
+
+          <section class="card section-card">
+            <h3><i class="fa-solid fa-list"></i> Today's Log</h3>
+            <ul id="activity-list" class="activity-list"></ul>
+          </section>
+        </div>
+      </div>
+
+      <!-- ACTIVITIES VIEW -->
+      <div id="activities-view" class="view-section" style="display: none;">
+        <div class="card">
+          <h3><i class="fa-solid fa-list-check"></i> All Recorded Activities</h3>
+          <p style="color: var(--text-sub); margin-bottom: 16px;">View and manage your full activity history.</p>
+          <ul id="full-activity-list" class="activity-list"></ul>
+        </div>
+      </div>
+
+      <!-- DAILY GOALS VIEW -->
+      <div id="goals-view" class="view-section" style="display: none;">
+        <div class="card">
+          <h3><i class="fa-solid fa-bullseye"></i> Target Goals</h3>
+          <p style="color: var(--text-sub); margin-bottom: 16px;">Set your target hours to adjust score targets.</p>
+          <div class="form-group" style="max-width: 300px;">
+            <label for="target-hours-input">Daily Target (Hours)</label>
+            <input type="number" id="target-hours-input" value="8" min="1" max="24">
+            <button id="save-target-btn" class="btn-primary" style="margin-top: 10px;">Update Goal Target</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ANALYTICS VIEW -->
+      <div id="analytics-view" class="view-section" style="display: none;">
+        <div class="card">
+          <h3><i class="fa-solid fa-chart-pie"></i> Productivity Breakdown</h3>
+          <p style="color: var(--text-sub); margin-bottom: 16px;">Category breakdown of your effort today.</p>
+          <div id="analytics-summary" style="display: flex; flex-direction: column; gap: 12px;"></div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+  <script src="js/script.js"></script>
+</body>
+</html>
